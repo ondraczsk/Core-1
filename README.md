@@ -27,4 +27,4 @@ But should work on:
   </tr>
 </table>
 
-Contribute: <a href="mailto:majorhardyt@gmail.com?subject=Core Plugin&body=Hi, I wondred if I could contribute to Core! Thanks! <Your Name>">Here</a>
+Contribute: <a href="mailto:majorhardyt@gmail.com?subject=Core Plugin&body=Hi, I wondred if I could contribute to Core! Thanks! [Your Name]">Here</a>
