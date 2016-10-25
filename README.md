@@ -26,3 +26,5 @@ But should work on:
     <td>(Re)start your server</td>
   </tr>
 </table>
+
+Contribute: <a href="mailto:majorhardyt@gmail.com?subject=Core Plugin&body=Hi, I wondred if I could contribute to Core! Thanks! <Your Name>">Here</a>
