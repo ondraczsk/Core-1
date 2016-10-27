@@ -69,7 +69,7 @@ class Main extends PluginBase implements Listener
     public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
         if (!$sender instanceof Player) {
             $sender->sendMessage(TextFormat::BLUE . "############################");
-            $sender->sendMessage(TextFormat::BLUE . "# Use this command in-game #");
+            $sender->sendMessage(TextFormat::BLUE . "#".TextFormat::GREEN." Use this command in-game".TextFormat::BLUE." #");
             $sender->sendMessage(TextFormat::BLUE . "############################");
             return false;
         } else {
