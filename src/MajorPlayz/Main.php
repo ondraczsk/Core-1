@@ -59,7 +59,7 @@ class Main extends PluginBase implements Listener {
 			switch ($command) {
 				case "core" :
 					{
-						if (! isset ( $args [0] )) {
+                        if (!isset ($args[0])) {
 							if (! $sender->hasPermission ( "core.command.info" ))
 								return;
 							$sender->sendMessage ( TextFormat::GOLD . "-------------" );
@@ -74,7 +74,6 @@ class Main extends PluginBase implements Listener {
 					}
 				case "commands" :
 					{
-						if (! isset ( $args [0] )) {
 							$sender->sendMessage ( TextFormat::GOLD . "------------------" );
 							$sender->sendMessage ( TextFormat::AQUA . "Majorcraft Factions!" );
 							$sender->sendMessage ( TextFormat::GOLD . "------------------" );
@@ -114,21 +113,21 @@ class Main extends PluginBase implements Listener {
 				case "nick" :
 					{
 						if ($sender->hasPermission ( "core.command.nick.use" )) {
-							if (empty ( $args [0] )) {
+                            if (empty ($args[0])) {
 								$sender->sendMessage ( TextFormat::RED . "Please enter a valid player name..." );
 								return true;
 							}
-							if (empty ( $args [1] )) {
+                            if (empty ($args[1])) {
 								$sender->sendMessage ( TextFormat::RED . "Please enter a valid nick." );
 								return true;
 							}
-							$playerName = $args [0];
+                            $playerName = $args[0];
 							$p = $sender->getServer ()->getPlayerExact ( $playerName );
 							if ($p == null) {
 								$sender->sendMessage ( TextFormat::RED . "player " . TextFormat::AQUA . $playerName . " is not online!" );
 								return true;
 							}
-							$nick = $args [1];
+                            $nick = $args[1];
 							$this->plugin->nick_config ( $p->getName () . ".nick", $nick );
 
                             $this->plugin->formatterPlayerDisplayName ( $p );
@@ -143,7 +142,10 @@ class Main extends PluginBase implements Listener {
     public function onPlayerChat(PlayerChatEvent $event) {
 		$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
         $player = $event->getPlayer();
-        $player->sendMessage(TextFormat::RED . "Watch Your Language");
+    if ((!$player->isOP()) && ($event->preg_match($this->filterBadwords($m, $this->badWords)))) {
+        $player->sendMessage(TextFormat::RED . "Watch your language");
+        $event->setCancelled;
+    }
     }
 
     public function filterBadwords($text, array $badwords, $replaceChar = '*')
