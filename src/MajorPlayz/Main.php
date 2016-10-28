@@ -48,13 +48,7 @@ class Main extends PluginBase implements Listener {
 			$this->badWords [] = $word;
 		}
 	}
-	public function filterBadwords($text, array $badwords, $replaceChar = '*') {
-		return preg_replace_callback ( array_map ( function ($w) {
-			return '/\b' . preg_quote ( $w, '/' ) . '\b/i';
-		}, $badwords ), function ($match) use ($replaceChar) {
-			return str_repeat ( $replaceChar, strlen ( $match [0] ) );
-		}, $text );
-	}
+
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
 		if (! $sender instanceof Player) {
 			$sender->sendMessage ( TextFormat::BLUE . "############################" );
@@ -73,7 +67,7 @@ class Main extends PluginBase implements Listener {
 							$sender->sendMessage ( TextFormat::GOLD . "-------------" );
 							$sender->sendMessage ( TextFormat::BLUE . "This core was developed by the" . TextFormat::RED . " Majorcraft" . TextFormat::BLUE . " team." );
 							$sender->sendMessage ( TextFormat::AQUA . "The core was a project inspired by the very great server, LBSG and has taken forever (a very long time)!" );
-							$sender->sendMessage ( TextFormat::AQUA . "Core version: " . TextFormat::BLUE . "1.0.0 UNSTABLE" );
+                            $sender->sendMessage(TextFormat::AQUA . "Core version: " . TextFormat::BLUE . "0.0.1-alpha.2 UNSTABLE");
 							return true;
 							break;
 						}
@@ -92,8 +86,8 @@ class Main extends PluginBase implements Listener {
 							break;
 						}
 					}
-				
-				case "fhelp" :
+
+                case "fhelp" :
 					{
 						$sender->sendMessage ( TextFormat::GREEN . "-----------" );
 						$sender->sendMessage ( TextFormat::GOLD . "Factions Help" );
@@ -105,15 +99,15 @@ class Main extends PluginBase implements Listener {
 						return true;
 						break;
 					}
-				
-				case "mhelp" :
+
+                case "mhelp" :
 					{
 						$sender->sendMessage ( TextFormat::GOLD . TextFormat::BOLD . "Feature coming soon!" );
 						return true;
 						break;
 					}
-				
-				case "secretcommand" :
+
+                case "secretcommand" :
 					{
 						$sender->sendMessage ( "Shhhh! You found the secret command!" );
 					}
@@ -136,8 +130,8 @@ class Main extends PluginBase implements Listener {
 							}
 							$nick = $args [1];
 							$this->plugin->nick_config ( $p->getName () . ".nick", $nick );
-							
-							$this->plugin->formatterPlayerDisplayName ( $p );
+
+                            $this->plugin->formatterPlayerDisplayName ( $p );
 							$sender->sendMessage ( TextFormat::GREEN . $p->getName () . " set to " . $args [1] );
 							break;
 						}
@@ -145,7 +139,17 @@ class Main extends PluginBase implements Listener {
 			}
 		}
 	}
-	public function onPlayerChat(PlayerChatEvent $event) {
+
+    public function onPlayerChat(PlayerChatEvent $event) {
 		$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
+    }
+
+    public function filterBadwords($text, array $badwords, $replaceChar = '*')
+    {
+        return preg_replace_callback(array_map(function ($w) {
+            return '/\b' . preg_quote($w, '/') . '\b/i';
+        }, $badwords), function ($match) use ($replaceChar) {
+            return str_repeat($replaceChar, strlen($match [0]));
+        }, $text);
 	}
 }
