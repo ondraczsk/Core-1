@@ -142,7 +142,7 @@ class Main extends PluginBase implements Listener {
     public function onPlayerChat(PlayerChatEvent $event) {
 		$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
         $player = $event->getPlayer();
-    if ((!$player->isOP()) && ($event->preg_match($this->filterBadwords($m, $this->badWords)))) {
+    if ((!$player->isOp()) && ($event->preg_match($this->filterBadwords($m, $this->badWords)))) {
         $player->sendMessage(TextFormat::RED . "Watch your language");
         $event->setCancelled;
     }
