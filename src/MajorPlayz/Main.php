@@ -147,7 +147,6 @@ class Main extends PluginBase implements Listener {
 		}
 	}
 	public function onPlayerChat(PlayerChatEvent $event) {
-		// $event->getPlayer()->sendMessage(TextFormat::RED . "I'm sorry, I can't let you say that.");
 		$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
 	}
 }
