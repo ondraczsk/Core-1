@@ -2,7 +2,7 @@ name: Majorcraft
 main: MajorPlayz\Main
 version: 1.0.0
 api: 2.0.0
-author: [MajorPlayz,Muqsit]
+author: [MajorPlayz,Muqsit,VCraftMCPE]
 
 commands:
  core:
