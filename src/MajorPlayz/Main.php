@@ -28,21 +28,24 @@ class Main extends PluginBase implements Listener {
 	// Constnants:
 	const AUTHOR = "MajorPlayz";
 	const PREFIX = "Core:";
+	
 	public function onEnable() {
 		$this->getLogger ()->info ( TextFormat::GREEN . "Majorcraft Core Started" );
 		$this->saveDefaultConfig ();
 		$this->reloadConfig ();
 	}
+	
 	public function onDisable() {
 		$this->getLogger ()->info ( TextFormat::GREEN . "Majorcraft Core Disabled... Did the server stop?" );
 	}
+	
 	public function onLoad() {
 		$this->getLogger ()->info ( TextFormat::GREEN . "Majorcraft Core Loaded" );
 		if (! file_exists ( $this->getDataFolder () . "chat.yml" )) {
 			@mkdir ( $this->getDataFolder () );
 			file_put_contents ( $this->getDataFolder () . "chat.yml", $this->getResource ( "chat.yml" ) );
 		}
-		$this->badWords = [ ];
+		$this->badWords = [];
 		$words = (new Config ( $this->getDataFolder () . "chat.yml", Config::YAML ))->getAll ();
 		foreach ( $words as $word ) {
 			$this->badWords [] = $word;
@@ -140,19 +143,20 @@ class Main extends PluginBase implements Listener {
 	}
 
     public function onPlayerChat(PlayerChatEvent $event) {
-		$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
         $player = $event->getPlayer();
-    if ((!$player->isOp()) && ($event->preg_match($this->filterBadwords($m, $this->badWords)))) {
-        $player->sendMessage(TextFormat::RED . "Watch your language");
-        $event->setCancelled;
-    }
+	$event->setMessage($this->filterBadwords($event->getMessage()));
+	//$event->setMessage ( $this->filterbadwords ( $m, $this->badWords ) );
+    	//if ((!$player->isOp()) && ($event->preg_match($this->filterBadwords($m, $this->badWords)))) {
+        	//$player->sendMessage(TextFormat::RED . "Watch your language");
+        	//$event->setCancelled();
+    	//}
     }
 
-    public function filterBadwords($text, array $badwords, $replaceChar = '*')
+    public function filterBadwords($text, $replaceChar = '*')
     {
         return preg_replace_callback(array_map(function ($w) {
             return '/\b' . preg_quote($w, '/') . '\b/i';
-        }, $badwords), function ($match) use ($replaceChar) {
+        }, $this->badWords), function ($match) use ($replaceChar) {
             return str_repeat($replaceChar, strlen($match [0]));
         }, $text);
 	}
