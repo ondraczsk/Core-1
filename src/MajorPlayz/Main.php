@@ -45,6 +45,7 @@ class Main extends PluginBase implements Listener {
 			@mkdir ( $this->getDataFolder () );
 			file_put_contents ( $this->getDataFolder () . "chat.yml", $this->getResource ( "chat.yml" ) );
 		}
+		$this->config = new Config($this->api->plugin->configPath($this)."config.yml", CONFIG_YAML, array("player_join_message","Hey! Welcome to MajorcraftPE");
 		$this->badWords = [];
 		$words = (new Config ( $this->getDataFolder () . "chat.yml", Config::YAML ))->getAll ();
 		foreach ( $words as $word ) {
@@ -161,3 +162,8 @@ class Main extends PluginBase implements Listener {
         }, $text);
 	}
 }
+	public function onPlayerJoin(PlayerJoinEvent $event){
+	
+		$player = $event->getPlayer();
+		$player->sendMessage( TextFormat::BLUE . $this->api->plugin->readYAML($this->api->plugin->configPath($this). "config.yml");
+	}
